@@ -59,9 +59,11 @@ pipeline {
 
 def buildImage(baseImage) {
     def scmvar = checkout(scm)
-    echo "${scmvar}"
+    echo "scmvar is: ${scmvar}"
     def imageName = "dockerbuildbot/compose:${baseImage}-${scmvar.GIT_COMMIT}"
+    echo "imageName is ${imageName}"
     image = docker.image(imageName)
+    echo "image is ${image}"
     
     withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
         try {
