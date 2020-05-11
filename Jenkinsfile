@@ -65,10 +65,7 @@ def buildImage(baseImage) {
     image = docker.image(imageName)
     echo "image is ${image}"
     
-    withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
-        try {
-            image.pull()
-        } catch (Exception exc) {
+    withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {       
             ansiColor('xterm') {
                 sh """docker build -t ${imageName} \\
                     --target build \\
@@ -80,7 +77,6 @@ def buildImage(baseImage) {
             }
             echo "${imageName}"
             return imageName
-        }
     }
 }
 
