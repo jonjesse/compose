@@ -20,7 +20,7 @@ pipeline {
             parallel {
                 stage('alpine') {
                     agent {
-                        label 'ubuntu && amd64 && !zfs'
+                        label 'master'
                     }
                     steps {
                         buildImage('alpine')
@@ -28,7 +28,7 @@ pipeline {
                 }
                 stage('debian') {
                     agent {
-                        label 'ubuntu && amd64 && !zfs'
+                        label 'master'
                     }
                     steps {
                         buildImage('debian')
