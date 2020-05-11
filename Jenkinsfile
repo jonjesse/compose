@@ -90,7 +90,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
         stage("python=${pythonVersion} docker=${dockerVersion} ${baseImage}") {
             node("master") {
                 def scmvar = checkout(scm)
-                def imageName = "dockerbuildbot/compose:${baseImage}-${scmvar.GIT_COMMIT}"
+                def imageName = "jonjesse/compose:${baseImage}-${scmvar.GIT_COMMIT}"
                 def storageDriver = sh(script: "docker info -f \'{{.Driver}}\'", returnStdout: true).trim()
                 echo "Using local system's storage driver: ${storageDriver}"
                 withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
