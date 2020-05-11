@@ -1,7 +1,8 @@
 #!groovy
 
 def dockerVersions = ['19.03.8']
-def baseImages = ['alpine', 'debian']
+//def baseImages = ['alpine', 'debian']
+def baseImages = ['alpine']
 def pythonVersions = ['py37']
 
 pipeline {
@@ -26,14 +27,14 @@ pipeline {
                         buildImage('alpine')
                     }
                 }
-                stage('debian') {
+                /*stage('debian') {
                     agent {
                         label 'master'
                     }
                     steps {
                         buildImage('debian')
                     }
-                }
+                }*/
             }
         }
         stage('Test') {
