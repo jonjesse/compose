@@ -61,8 +61,10 @@ def buildImage(baseImage) {
     def scmvar = checkout(scm)
     //echo ${scmvar}
     def imageName = "dockerbuildbot/compose:${baseImage}-${scmvar.GIT_COMMIT}"
+    echo ${imageName}
     image = docker.image(imageName)
-
+    echo ${image}
+    
     withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
         try {
             image.pull()
