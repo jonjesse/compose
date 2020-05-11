@@ -73,7 +73,7 @@ def buildImage(baseImage) {
                     --build-arg GIT_COMMIT="${scmvar.GIT_COMMIT}" \\
                     .\\
                 """
-                sh "docker push ${imageName}"
+                //sh "docker push ${imageName}"
             }
             echo "${imageName}"
             return imageName
