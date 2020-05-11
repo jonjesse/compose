@@ -88,7 +88,6 @@ def buildImage(baseImage) {
 def runTests(dockerVersion, pythonVersion, baseImage) {
     return {
         stage("python=${pythonVersion} docker=${dockerVersion} ${baseImage}") {
-            agent docker {
               node("master") {
                 def scmvar = checkout(scm)
                 def imageName = "jonjesse/compose:${baseImage}-${scmvar.GIT_COMMIT}"
@@ -111,7 +110,6 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                       --verbose
                     """
                 }
-              }
             }
         }
     }
