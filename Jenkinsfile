@@ -98,7 +98,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                       -t \\
                       --rm \\
                       --privileged \\
-                      --volume="\$(pwd)/.git:/code/.git" \\
+                      --volume="/home/jenkins/workspace/_docker_compose/.git:/code/.git" \\
                       --volume="/var/run/docker.sock:/var/run/docker.sock" \\
                       -e "TAG=${imageName}" \\
                       -e "STORAGE_DRIVER=${storageDriver}" \\
