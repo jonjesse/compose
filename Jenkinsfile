@@ -68,7 +68,7 @@ def buildImage(baseImage) {
     withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
         try {
             image.pull()
-        } catch (exc) {
+        } catch (Exception exc) {
             ansiColor('xterm') {
                 sh """docker build -t ${imageName} \\
                     --target build \\
