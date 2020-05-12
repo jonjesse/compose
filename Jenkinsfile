@@ -6,7 +6,7 @@ def baseImages = ['alpine']
 def pythonVersions = ['py37']
 
 pipeline {
-    agent docker
+    agent none
 
     options {
         skipDefaultCheckout(true)
