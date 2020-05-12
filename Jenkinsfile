@@ -99,7 +99,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                 //withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
                  agent { 
 		   docker {
-			image ${imageName}
+			image "\${imageName}"
 			args "-e TAG=\$(imageName} -e STORAGE_DRIVER=\${storageDriver}"
 			args "-e DOCKER_VERSIONS=\${dockerVersion}"
 			args "-e BUILD_NUMBER=\${env.BUILD_NUMBER}"
