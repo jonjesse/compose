@@ -6,7 +6,7 @@ def baseImages = ['alpine']
 def pythonVersions = ['py37']
 
 pipeline {
-    agent none
+    agent docker
 
     options {
         skipDefaultCheckout(true)
@@ -88,7 +88,7 @@ def buildImage(baseImage) {
 def runTests(dockerVersion, pythonVersion, baseImage) {
     return {
         stage("python=${pythonVersion} docker=${dockerVersion} ${baseImage}") {
-              node("master") {
+              //node("master") {
                 def scmvar = checkout(scm)
                 def imageName = "jonjesse/compose:${baseImage}-${scmvar.GIT_COMMIT}"
                 def storageDriver = sh(script: "docker info -f \'{{.Driver}}\'", returnStdout: true).trim()
@@ -110,7 +110,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
 		  }
                 }
             //}
-        }
+        //}
     }
   }
 }
