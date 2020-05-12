@@ -38,6 +38,9 @@ pipeline {
             }
         }
         stage('Test') {
+          agent {
+           label 'master'
+          }
             steps {
                 // TODO use declarative 1.5.0 `matrix` once available on CI
                 script {
