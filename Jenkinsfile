@@ -97,10 +97,10 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                  agent { 
 		   docker {
 			image ${imageName}
-			args "-e TAG=$(imageName} -e STORAGE_DRIVER=${storageDriver} \\
-			     -e DOCKER_VERSIONS=${dockerVersion} \\
-				-e BUILD_NUMBER=${env.BUILD_NUMBER} \\
-				-e PY_TEST_VERSIONS=${pythonVersion}"
+			args "-e TAG=$(imageName} -e STORAGE_DRIVER=${storageDriver}"
+			args "-e DOCKER_VERSIONS=${dockerVersion}"
+			args "-e BUILD_NUMBER=${env.BUILD_NUMBER}"
+			args "-e PY_TEST_VERSIONS=${pythonVersion}"
 		   }
  		   environment {
 			VOLUME = "$(pwd)/.git:/code/.git"
