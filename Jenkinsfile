@@ -93,7 +93,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                 def imageName = "jonjesse/compose:${baseImage}-${scmvar.GIT_COMMIT}"
                 def storageDriver = sh(script: "docker info -f \'{{.Driver}}\'", returnStdout: true).trim()
                 echo "Using local system's storage driver: ${storageDriver}"
-                withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
+                //withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
                  agent { 
 		   docker {
 			image ${imageName}
@@ -109,7 +109,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
 			ENTRYPOINT = "script/test/ci"
 		  }
                 }
-            }
+            //}
         }
     }
   }
