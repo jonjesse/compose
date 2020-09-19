@@ -70,7 +70,7 @@ def buildImage(baseImage) {
         try {
             image.pull()
         } catch (exc) {
-	  image.build("${imageName}","--target build --build-arg BUILD_PLATFORM=${baseImage} --build-arg GIT_COMMIT=${scmvar.GIT_COMMIT} .")
+	  image.build("${imageName}","-f Dockerfile --target build --build-arg BUILD_PLATFORM=${baseImage} --build-arg GIT_COMMIT=${scmvar.GIT_COMMIT} .")
             //ansiColor('xterm') {
                // sh """docker build -t ${imageName} \\
                  //   --target build \\
