@@ -66,19 +66,20 @@ def buildImage(baseImage) {
     image = docker.image(imageName)
     echo "image is ${image}"
     
-    withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {    
+    docker.withRegistry(credentialsId:'dockerbuildbot-index.docker.io') {    
         try {
             image.pull()
         } catch (exc) {
-            ansiColor('xterm') {
-                sh """docker build -t ${imageName} \\
-                    --target build \\
-                    --build-arg BUILD_PLATFORM="${baseImage}" \\
-                    --build-arg GIT_COMMIT="${scmvar.GIT_COMMIT}" \\
-                    .\\
-                """
+	  image.build("${imageName}","--target build","--build-arg BUILD_PLATFORM=\"${baseImage}\"","--build-arg GIT_COMMIT=\"${scmvar.GIT_COMMIT}\"")
+            //ansiColor('xterm') {
+               // sh """docker build -t ${imageName} \\
+                 //   --target build \\
+                  //  --build-arg BUILD_PLATFORM="${baseImage}" \\
+                   // --build-arg GIT_COMMIT="${scmvar.GIT_COMMIT}" \\
+                   // .\\
+               // """
                 //sh "docker push ${imageName}"
-            }
+            //}
             echo "${imageName}"
             return imageName
         }
