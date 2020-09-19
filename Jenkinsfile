@@ -66,7 +66,7 @@ def buildImage(baseImage) {
     image = docker.image(imageName)
     echo "image is ${image}"
     
-    docker.withRegistry(credentialsId:'dockerbuildbot-index.docker.io') {    
+    docker.withRegistry('dockerbuildbot-index.docker.io') {    
         try {
             image.pull()
         } catch (exc) {
