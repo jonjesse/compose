@@ -97,7 +97,7 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                 def storageDriver = sh(script: "docker info -f \'{{.Driver}}\'", returnStdout: true).trim()
                 echo "Using local system's storage driver: ${storageDriver}"
                 docker.withRegistry('dockerbuildbot-index.docker.io') {
-		  docker.image(imageName).withRun("""-t --rm --privileged --volume="/home/jenkins/workspace/_docker_compose/.git:/code/.git" --volume="var/run/docker.sock:/var/run/docker.sock" -e "TAG=${imageName}" -e "STORAGE_DRIVER=${storageDriver}" -e "DOCKER_VERSIONS=${dockerVersion}" -e "PY_TEST_VERSIONS=${pythonVersion}" --entrypoint='script/test/ci'""") { c -> sh './script/test/ci --verbose'}
+		  docker.image(imageName).withRun("""-t --rm --privileged --volume="/home/jenkins/workspace/_docker_compose/.git:/code/.git" --volume="/var/run/docker.sock:/var/run/docker.sock" -e "TAG=${imageName}" -e "STORAGE_DRIVER=${storageDriver}" -e "DOCKER_VERSIONS=${dockerVersion}" -e "PY_TEST_VERSIONS=${pythonVersion}" --entrypoint='script/test/ci'""") { c -> sh './script/test/ci --verbose'}
 		 //withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
                   //  sh """docker run \\
                     //  -t \\
