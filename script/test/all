@@ -3,6 +3,7 @@
 # at the root of the repo - script/test will do it automatically.
 
 set -e
+echo $TAG
 
 >&2 echo "Running lint checks"
 #docker run --rm \
