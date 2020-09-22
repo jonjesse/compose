@@ -99,8 +99,8 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                 docker.withRegistry('dockerbuildbot-index.docker.io') {
 		  docker.image(imageName).withRun("""-t --rm --privileged --volume="/home/jenkins/workspace/_docker_compose/.git:/code/.git" --volume="/var/run/docker.sock:/var/run/docker.sock" --entrypoint='script/test/ci'""","--verbose") {
 			withEnv(["TAG=${imageName}","STORAGE_DRIVER=${storageDriver}","DOCKER_VERSIONS=${dockerVersion}","BUILD_NUMBER=${env.BUILD_NUMBER}","PY_TEST_VERSIONS=${pythonVersion}"]) { 
-
-		sh './script/test/ci'}
+		}
+		//sh './script/test/ci'}
 		}
 		 //withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
                   //  sh """docker run \\
