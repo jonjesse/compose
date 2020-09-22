@@ -43,14 +43,15 @@ pipeline {
                 script {
                     def testMatrix = [:]
                     baseImages.each { baseImage ->
-                      dockerVersions.each { dockerVersion ->
+                       dockerVersions.each { dockerVersion ->
                         pythonVersions.each { pythonVersion ->
                           testMatrix["${baseImage}_${dockerVersion}_${pythonVersion}"] = runTests(dockerVersion, pythonVersion, baseImage)
                         }
                       }
-                    }
+                   }
 
-                    parallel testMatrix
+                   parallel testMatrix
+		    //testMatrix["${baseImage[0]}
                 }
             }
         }
@@ -95,22 +96,24 @@ def runTests(dockerVersion, pythonVersion, baseImage) {
                 def imageName = "jonjesse/compose:${baseImage}-${scmvar.GIT_COMMIT}"
                 def storageDriver = sh(script: "docker info -f \'{{.Driver}}\'", returnStdout: true).trim()
                 echo "Using local system's storage driver: ${storageDriver}"
-                withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
-                    sh """docker run \\
-                      -t \\
-                      --rm \\
-                      --privileged \\
-                      --volume="/home/jenkins/workspace/_docker_compose/.git:/code/.git" \\
-                      --volume="/var/run/docker.sock:/var/run/docker.sock" \\
-                      -e "TAG=${imageName}" \\
-                      -e "STORAGE_DRIVER=${storageDriver}" \\
-                      -e "DOCKER_VERSIONS=${dockerVersion}" \\
-                      -e "BUILD_NUMBER=${env.BUILD_NUMBER}" \\
-                      -e "PY_TEST_VERSIONS=${pythonVersion}" \\
-                      --entrypoint="script/test/ci" \\
-                      ${imageName} \\
-                      --verbose
-                    """
+                docker.withRegistry('dockerbuildbot-index.docker.io') {
+		  docker.image(imageName).withRun("-t --rm --privileged --volume='/home/jenkins/workspace/_docker_compose/.git:/code/.git' --volume='/var/run/docker.sock:/var/run/docker.sock' -e TAG=${imageName} -e 'STORAGE_DRIVER=${storageDriver}' -e 'DOCKER_VERSIONS=${dockerVersion}' -e 'PY_TEST_VERSIONS=${pythonVersion}' --entrypoint='script/test/ci' --verbose") {}
+		 //withDockerRegistry(credentialsId:'dockerbuildbot-index.docker.io') {
+                  //  sh """docker run \\
+                    //  -t \\
+                   //   --rm \\
+                   //   --privileged \\
+                   //   --volume="/home/jenkins/workspace/_docker_compose/.git:/code/.git" \\
+                   //   --volume="/var/run/docker.sock:/var/run/docker.sock" \\
+                   //   -e "TAG=${imageName}" \\
+                   //   -e "STORAGE_DRIVER=${storageDriver}" \\
+                   //   -e "DOCKER_VERSIONS=${dockerVersion}" \\
+                   //  -e "BUILD_NUMBER=${env.BUILD_NUMBER}" \\
+                   //   -e "PY_TEST_VERSIONS=${pythonVersion}" \\
+                   //   --entrypoint="script/test/ci" \\
+                   //   ${imageName} \\
+                   //   --verbose
+                  //  """
                 }
             }
         }
