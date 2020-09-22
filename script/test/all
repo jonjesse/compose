@@ -16,12 +16,15 @@ get_versions="docker run --rm
     $TAG
     /code/script/test/versions.py docker/docker-ce,moby/moby"
 
+echo "docker_version: $DOCKER_VERSIONS"
+
 if [ "$DOCKER_VERSIONS" == "" ]; then
   DOCKER_VERSIONS="$($get_versions default)"
 elif [ "$DOCKER_VERSIONS" == "all" ]; then
   DOCKER_VERSIONS=$($get_versions -n 2 recent)
 fi
 
+echo $DOCKER_VERSIONS
 
 BUILD_NUMBER=${BUILD_NUMBER-$USER}
 PY_TEST_VERSIONS=${PY_TEST_VERSIONS:-py27,py37}
