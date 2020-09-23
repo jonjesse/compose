@@ -65,6 +65,7 @@ def buildImage(baseImage) {
     def imageName = "jonjesse/compose:${baseImage}-${scmvar.GIT_COMMIT}"
     echo "imageName is ${imageName}"
     image = docker.image(imageName)
+    def custImage = "" 
     echo "image is ${image}"
     
     docker.withRegistry('dockerbuildbot-index.docker.io') {    
