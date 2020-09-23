@@ -10,6 +10,7 @@ mkdir -p dist
 chmod 777 dist
 
 "${VENV}"/bin/pip3 install -q -r requirements-build.txt
+echo "docker_compose_gitsha: ${DOCKER_COMPOSE_GITSHA}"
 
 # TODO(ulyssessouza) To check if really needed
 if [ -z "${DOCKER_COMPOSE_GITSHA}" ]; then
